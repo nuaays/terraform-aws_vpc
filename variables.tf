@@ -1,0 +1,9 @@
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+variable "aws_key_name" {}
+variable "aws_key_path" {}
+variable "vpc_region" {}
+variable "vpc_cidr" {}
+variable "subnet-priv0_cidr" {}
+variable "subnet-pub255_cidr" {}
+variable "rhel_ami" {}
