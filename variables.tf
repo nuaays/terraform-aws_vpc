@@ -2,6 +2,7 @@ variable "aws_access_key" {}
 variable "aws_secret_key" {}
 variable "aws_key_name" {}
 variable "aws_key_path" {}
+variable "vpc_name" {}
 variable "vpc_region" {}
 variable "vpc_cidr" {}
 variable "subnet-priv0_cidr" {}
