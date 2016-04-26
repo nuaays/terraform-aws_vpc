@@ -4,7 +4,7 @@ provider "aws" {
         region = "${var.aws_region}"
 }
 
-resource "aws_vpc" "default" {
+resource "aws_vpc" "module" {
   cidr_block = "${var.network_prefix}.0.0/16"
   tags = {
     Name = "${var.vpc_name}"
@@ -12,7 +12,7 @@ resource "aws_vpc" "default" {
 }
 
 resource "aws_internet_gateway" "default" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.module.id}"
   tags {
     Name = "default_gw"
   }
@@ -66,7 +66,7 @@ resource "aws_security_group" "nat" {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks = ["${aws_vpc.default.cidr_block}"]
+        cidr_blocks = ["${aws_vpc.module.cidr_block}"]
     }
     egress {
         from_port = -1
@@ -74,7 +74,7 @@ resource "aws_security_group" "nat" {
         protocol = "icmp"
         cidr_blocks = ["0.0.0.0/0"]
     }
-    vpc_id = "${aws_vpc.default.id}"
+    vpc_id = "${aws_vpc.module.id}"
 
     tags {
         Name = "NATSG"
@@ -104,7 +104,7 @@ resource "aws_eip" "nat" {
 */
 
 resource "aws_subnet" "subnet-pub" {
-        vpc_id = "${aws_vpc.default.id}"
+        vpc_id = "${aws_vpc.module.id}"
 
         cidr_block = "${var.subnet-pub_cidr}"
         availability_zone = "${var.az}"
@@ -115,7 +115,7 @@ resource "aws_subnet" "subnet-pub" {
 }
 
 resource "aws_route_table" "route-default" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.module.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -135,7 +135,7 @@ resource "aws_route_table_association" "route-default" {
   Private Subnet
 */
 resource "aws_subnet" "subnet-priv" {
-    vpc_id = "${aws_vpc.default.id}"
+    vpc_id = "${aws_vpc.module.id}"
 
     cidr_block = "${var.subnet-priv_cidr}"
     availability_zone = "${var.az}"
@@ -146,7 +146,7 @@ resource "aws_subnet" "subnet-priv" {
 }
 
 resource "aws_route_table" "route-priv" {
-    vpc_id = "${aws_vpc.default.id}"
+    vpc_id = "${aws_vpc.module.id}"
 
     route {
         cidr_block = "0.0.0.0/0"
@@ -182,7 +182,7 @@ resource "aws_security_group" "ssh_world" {
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.module.id}"
   tags {
     Name = "ssh_world"
   }
@@ -196,7 +196,7 @@ resource "aws_security_group" "ssh_vpc" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
+    cidr_blocks = ["${aws_vpc.module.cidr_block}"]
   }
   ingress {
     from_port = -1
@@ -210,7 +210,7 @@ resource "aws_security_group" "ssh_vpc" {
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.module.id}"
   tags {
     Name = "ssh_vpc"
   }
