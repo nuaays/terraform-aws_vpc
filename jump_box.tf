@@ -1,10 +1,10 @@
 resource "aws_instance" "vpc_jumpbox" {
     ami = "${var.rhel_ami}"
-    availability_zone = "${var.vpc_region}b"
+    availability_zone = "${var.az}"
     instance_type = "t2.micro"
     key_name = "${var.aws_key_name}"
     security_groups = [ "${aws_security_group.ssh_world.id}" ]
-    subnet_id = "${aws_subnet.subnet-pub255.id}"
+    subnet_id = "${aws_subnet.subnet-pub.id}"
     associate_public_ip_address = true
     source_dest_check = false
 
