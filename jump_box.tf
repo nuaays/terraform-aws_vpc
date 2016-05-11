@@ -22,7 +22,12 @@ resource "aws_instance" "vpc_jumpbox" {
       "sudo wget https://releases.hashicorp.com/terraform/0.6.14/terraform_0.6.14_linux_amd64.zip -P /opt/terraform/",
       "sudo unzip /opt/terraform/terraform_0.6.14_linux_amd64.zip -d /opt/terraform",
       "sudo rm -rf /opt/terraform/terraform_0.6.14_linux_amd64.zip",
-      "sudo ln -s /opt/terraform/terraform /usr/bin/terraform"
+      "sudo ln -s /opt/terraform/terraform /usr/bin/terraform",
+      "mkdir -p ~/cookbooks/ctt_docker",
+      "git clone https://github.com/christianTragesser/cookbook-ctt_docker.git ~/cookbooks/ctt_docker",
+      "cd ~/cookbooks/ctt_docker && berks install",
+      "cd ~/cookbooks/ctt_docker && berks vendor ~/cookbooks",
+      "sudo chef-client -z -o ctt_docker::default"
       ]
     }
 }
