@@ -160,14 +160,20 @@ resource "aws_route_table_association" "route-priv" {
     subnet_id = "${aws_subnet.subnet-priv.id}"
     route_table_id = "${aws_route_table.route-priv.id}"
 }
-resource "aws_security_group" "ssh_world" {
-  name = "ssh_world"
-  description = "everyone by TCP 22"
+resource "aws_security_group" "public_access" {
+  name = "public_access"
+  description = "access from public networks"
 
   ingress {
     from_port = 22
     to_port = 22
     protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 1194
+    to_port = 1194
+    protocol = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
@@ -184,7 +190,7 @@ resource "aws_security_group" "ssh_world" {
   }
   vpc_id = "${aws_vpc.module.id}"
   tags {
-    Name = "ssh_world"
+    Name = "public_access"
   }
 }
 
