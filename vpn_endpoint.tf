@@ -18,11 +18,11 @@ resource "aws_instance" "vpn_endpoint" {
     provisioner "remote-exec" {
       inline = [
       "sudo yum install git -y",
-      "mkdir -p ~/cookbooks/ctt_docker",
-      "git clone https://github.com/christianTragesser/cookbook-ctt_docker.git ~/cookbooks/ctt_docker",
+      "mkdir -p ~/cookbooks/ctt_ovpn",
+      "git clone https://github.com/christianTragesser/cookbook-ctt_ovpn.git ~/cookbooks/ctt_ovpn",
       "cd ~/cookbooks/ctt_docker && berks install",
       "cd ~/cookbooks/ctt_docker && berks vendor ~/cookbooks",
-      "sudo chef-client -z -o ctt_docker::default"
+      "sudo chef-client -z -o ctt_ovpn::default"
       ]
     }
 }
