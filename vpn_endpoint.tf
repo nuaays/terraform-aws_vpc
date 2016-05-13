@@ -20,8 +20,8 @@ resource "aws_instance" "vpn_endpoint" {
       "sudo yum install git -y",
       "mkdir -p ~/cookbooks/ctt_ovpn",
       "git clone https://github.com/christianTragesser/cookbook-ctt_ovpn.git ~/cookbooks/ctt_ovpn",
-      "cd ~/cookbooks/ctt_docker && berks install",
-      "cd ~/cookbooks/ctt_docker && berks vendor ~/cookbooks",
+      "cd ~/cookbooks/ctt_ovpn && berks install",
+      "cd ~/cookbooks/ctt_ovpn && berks vendor ~/cookbooks",
       "sudo chef-client -z -o ctt_ovpn::default"
       ]
     }
