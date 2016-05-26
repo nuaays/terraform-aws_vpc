@@ -1,4 +1,4 @@
-output "name" {
+output "vpc_name" {
   value = "${aws_vpc.module.tags.Name}"
 }
 output "subnet-pub" {
@@ -7,7 +7,7 @@ output "subnet-pub" {
 output "subnet-priv" {
     value = "${aws_subnet.subnet-priv.id}"
 }
-output "id" {
+output "vpc_id" {
     value = "${aws_vpc.module.id}"
 }
 output "cidr_block" {
