@@ -1,13 +1,13 @@
 provider "aws" {
-        access_key = "${var.aws_access_key}"
-        secret_key = "${var.aws_secret_key}"
-        region = "${var.aws_region}"
+        access_key = "${var.mod_aws_access_key}"
+        secret_key = "${var.mod_aws_secret_key}"
+        region = "${var.mod_aws_region}"
 }
 
 resource "aws_vpc" "module" {
-  cidr_block = "${var.network_prefix}.0.0/16"
+  cidr_block = "${var.mod_network_prefix}.0.0/16"
   tags = {
-    Name = "${var.vpc_name}"
+    Name = "${var.mod_vpc_name}"
   }
 }
 
@@ -29,13 +29,13 @@ resource "aws_security_group" "nat" {
         from_port = 80
         to_port = 80
         protocol = "tcp"
-        cidr_blocks = ["${var.subnet-priv_cidr}"]
+        cidr_blocks = ["${var.mod_subnet-priv_cidr}"]
     }
     ingress {
         from_port = 443
         to_port = 443
         protocol = "tcp"
-        cidr_blocks = ["${var.subnet-priv_cidr}"]
+        cidr_blocks = ["${var.mod_subnet-priv_cidr}"]
     }
     ingress {
         from_port = 22
@@ -82,16 +82,16 @@ resource "aws_security_group" "nat" {
 }
 resource "aws_instance" "nat" {
     ami = "ami-030f4133" # this is a special ami preconfigured to do NAT
-    availability_zone = "${var.az}"
+    availability_zone = "${var.mod_az}"
     instance_type = "t1.micro"
-    key_name = "${var.aws_key_name}"
+    key_name = "${var.mod_aws_key_name}"
     security_groups = ["${aws_security_group.nat.id}"]
     subnet_id = "${aws_subnet.subnet-pub.id}"
     associate_public_ip_address = true
     source_dest_check = false
 
     tags {
-        Name = "${var.vpc_name} VPC NAT"
+        Name = "${var.mod_vpc_name} VPC NAT"
     }
 }
 
@@ -106,8 +106,8 @@ resource "aws_eip" "nat" {
 resource "aws_subnet" "subnet-pub" {
         vpc_id = "${aws_vpc.module.id}"
 
-        cidr_block = "${var.subnet-pub_cidr}"
-        availability_zone = "${var.az}"
+        cidr_block = "${var.mod_subnet-pub_cidr}"
+        availability_zone = "${var.mod_az}"
         map_public_ip_on_launch = true
         tags {
             Name = "subnet-pub"
@@ -137,8 +137,8 @@ resource "aws_route_table_association" "route-default" {
 resource "aws_subnet" "subnet-priv" {
     vpc_id = "${aws_vpc.module.id}"
 
-    cidr_block = "${var.subnet-priv_cidr}"
-    availability_zone = "${var.az}"
+    cidr_block = "${var.mod_subnet-priv_cidr}"
+    availability_zone = "${var.mod_az}"
 
     tags {
         Name = "subnet-priv"
