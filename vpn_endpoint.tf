@@ -25,7 +25,7 @@ resource "aws_instance" "vpn_endpoint" {
       "sudo chef-client -z -o ctt_ovpn::default"
       ]
     }
-  resource "null_resource" "module_dependency" {
-    depends_on = ["aws_instance.vpn_endpoint"]
-  }
+}
+resource "null_resource" "module_dependency" {
+  depends_on = ["aws_instance.vpn_endpoint"]
 }
