@@ -28,6 +28,9 @@ output "public_access_security_group_id" {
 output "ssh_vpc_security_group_id" {
     value = "${aws_security_group.ssh_vpc.id}"
 }
+output "vpn_endpoint_id" {
+    value = "${aws_instance.vpn_endpoint.id}"
+}
 output "vpn_endpoint_public_ip" {
     value = "${aws_instance.vpn_endpoint.public_ip}"
 }
