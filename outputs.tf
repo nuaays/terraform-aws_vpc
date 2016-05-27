@@ -34,3 +34,6 @@ output "vpn_endpoint_id" {
 output "vpn_endpoint_public_ip" {
     value = "${aws_instance.vpn_endpoint.public_ip}"
 }
+output "module_dependency_id" { 
+  value = "${null_resource.module_dependency.id}" 
+}
