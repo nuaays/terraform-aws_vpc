@@ -29,13 +29,13 @@ resource "aws_security_group" "nat" {
         from_port = 80
         to_port = 80
         protocol = "tcp"
-        cidr_blocks = ["${var.mod_subnet-priv_cidr}"]
+        cidr_blocks = ["${var.mod_subnet-private_cidr}"]
     }
     ingress {
         from_port = 443
         to_port = 443
         protocol = "tcp"
-        cidr_blocks = ["${var.mod_subnet-priv_cidr}"]
+        cidr_blocks = ["${var.mod_subnet-private_cidr}"]
     }
     ingress {
         from_port = 22
@@ -106,7 +106,7 @@ resource "aws_eip" "nat" {
 resource "aws_subnet" "subnet-pub" {
         vpc_id = "${aws_vpc.module.id}"
 
-        cidr_block = "${var.mod_subnet-pub_cidr}"
+        cidr_block = "${var.mod_subnet-public_cidr}"
         availability_zone = "${var.mod_az}"
         map_public_ip_on_launch = true
         tags {
@@ -137,7 +137,7 @@ resource "aws_route_table_association" "route-default" {
 resource "aws_subnet" "subnet-priv" {
     vpc_id = "${aws_vpc.module.id}"
 
-    cidr_block = "${var.mod_subnet-priv_cidr}"
+    cidr_block = "${var.mod_subnet-private_cidr}"
     availability_zone = "${var.mod_az}"
 
     tags {

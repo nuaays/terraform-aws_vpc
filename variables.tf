@@ -6,6 +6,6 @@ variable "mod_vpc_name" {}
 variable "mod_network_prefix" {}
 variable "mod_aws_region" {}
 variable "mod_az" {}
-variable "mod_subnet-priv_cidr" {}
-variable "mod_subnet-pub_cidr" {}
+variable "mod_subnet-private_cidr" {}
+variable "mod_subnet-public_cidr" {}
 variable "mod_rhel_ami" {}
