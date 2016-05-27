@@ -1,10 +1,10 @@
 output "vpc_name" {
   value = "${aws_vpc.module.tags.Name}"
 }
-output "subnet-pub" {
+output "subnet-public" {
   value = "${aws_subnet.subnet-pub.id}"
 }
-output "subnet-priv" {
+output "subnet-private" {
     value = "${aws_subnet.subnet-priv.id}"
 }
 output "vpc_id" {
